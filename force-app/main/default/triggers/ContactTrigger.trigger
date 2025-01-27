@@ -23,6 +23,7 @@ trigger ContactTrigger on Contact(before insert, before update) {
 			// if DummyJSON_Id__c is null, generate a random number between 0 and 100 and set this as the contact's DummyJSON_Id__c value
 			if(cont.DummyJSON_Id__c == null) {
 				Integer randomNumber = Integer.valueOf((Math.random() * 100));
+				cont.DummyJSON_Id__c = String.valueOf(randomNumber);
 			}
 			// if DummyJSON_Id__c is less than or equal to 100, call the getDummyJSONUserFromId API
 			else if(Integer.valueOf(cont.DummyJSON_Id__c) <= 100){
