@@ -74,21 +74,21 @@ public with sharing class DummyJSONCallout {
 		// Create a new contact from the JSON response.
 		Contact cont = new Contact();
 		// Set the contact fields from the JSON response.
-		cont.FirstName = (String) jsonMap.get('first_name');
-		if(jsonMap.get('last_name') == null) {
+		cont.FirstName = (String) jsonMap.get('firstName');
+		if(jsonMap.get('lastName') == null) {
 			cont.LastName = 'Unknown';
-		} else {cont.LastName = (String) jsonMap.get('last_name');
+		} else {cont.LastName = (String) jsonMap.get('lastName');
 		}
 		cont.Email = (String) jsonMap.get('email');
 		cont.Phone = (String) jsonMap.get('phone');
-		cont.Birthdate = Date.valueOf((String) jsonMap.get('dob'));
-		cont.DummyJSON_Id__c = (String) jsonMap.get('DummyJSON_Id__c');
+		cont.Birthdate = Date.valueOf((String) jsonMap.get('birthDate'));
+		cont.DummyJSON_Id__c = String.valueOf((Integer) jsonMap.get('id'));
 		// Deserialize the address from the JSON response.
 		Map<String, Object> address = (Map<String, Object>) jsonMap.get('address');
 		// Set the address fields on the contact.
-		cont.MailingStreet = (String) address.get('street');
+		cont.MailingStreet = (String) address.get('address');
 		cont.MailingCity = (String) address.get('city');
-		cont.MailingPostalCode = (String) address.get('zipcode');
+		cont.MailingPostalCode = (String) address.get('postalCode');
 		cont.MailingState = (String) address.get('state');
 		cont.MailingCountry = (String) address.get('country');
 		return cont;
@@ -151,9 +151,9 @@ public with sharing class DummyJSONCallout {
 		Map<String, Object> jsonMap = new Map<String, Object>();
 		// Serialize the map into a JSON string.
 		if (cont.LastName == null) {
-			jsonMap.put('firstName', 'Unknown');
+			jsonMap.put('lastName', 'Unknown');
 		} else {
-			jsonMap.put('firstName', cont.LastName);
+			jsonMap.put('lastName', cont.LastName);
 		}
 		jsonMap.put('salesforceId', cont.Id);
 		jsonMap.put('firstName', cont.FirstName);
